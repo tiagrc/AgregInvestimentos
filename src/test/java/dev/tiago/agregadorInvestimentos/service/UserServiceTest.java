@@ -24,7 +24,7 @@ import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
 class UserServiceTest {
-    // Triple array -> Arrange / Act and Assert
+    // Triple way -> Arrange / Act and Assert
 
     @Mock
     private UserRepository userRepository;

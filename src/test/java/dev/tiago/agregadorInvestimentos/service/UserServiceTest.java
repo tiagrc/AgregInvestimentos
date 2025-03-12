@@ -1,6 +1,7 @@
 package dev.tiago.agregadorInvestimentos.service;
 
 import dev.tiago.agregadorInvestimentos.controller.CreateUserDTO;
+import dev.tiago.agregadorInvestimentos.controller.UpdateUserDTO;
 import dev.tiago.agregadorInvestimentos.entity.User;
 import dev.tiago.agregadorInvestimentos.repository.UserRepository;
 import org.junit.jupiter.api.DisplayName;
@@ -13,6 +14,7 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
+import javax.security.auth.login.AccountNotFoundException;
 import java.time.Instant;
 import java.util.List;
 import java.util.Optional;
@@ -211,6 +213,73 @@ class UserServiceTest {
                     .existsById(uuidArgumentCaptor.getValue());
             verify(userRepository, times(0))
                     .deleteById(any());
+        }
+    }
+
+    @Nested
+    class updateUserById{
+
+        @Test
+        @DisplayName("Buscar user via ID quando existir e username e senha estiverem preenchidos")
+        void deveBuscarUserPorIdSeUsernameEPasswordEstiveremPreenchidos() {
+            // Arrange
+            var updateUserDTO = new UpdateUserDTO(
+                    "newUsername",
+                    "NewPassword"
+            );
+            var user = new User(
+                    UUID.randomUUID(),
+                    "username",
+                    "email@email.com",
+                    "password",
+                    Instant.now(),
+                    null
+            );
+            doReturn(Optional.of(user))
+                    .when(userRepository)
+                    .findById(uuidArgumentCaptor.capture());
+            doReturn(user)
+                    .when(userRepository)
+                    .save(userArgumentCaptor.capture());
+            // Act
+            userService.updateUserById(user.getUserId().toString(), updateUserDTO);
+            // Assert
+            assertEquals(user.getUserId(), uuidArgumentCaptor.getValue());
+            var userCaptured = userArgumentCaptor.getValue();
+
+            assertEquals(updateUserDTO.username(), userCaptured.getUsername());
+            assertEquals(updateUserDTO.password(), userCaptured.getPassword());
+
+            verify(userRepository, times(1))
+                    .findById(uuidArgumentCaptor.getValue());
+            verify(userRepository, times(1))
+                    .save(user);
+        }
+
+        @Test
+        @DisplayName("Não deve buscar usuário caso ele não exista")
+        void naoDeveBuscarUsuarioCasoEleNaoExista() {
+            // Arrange
+            var updateUserDTO = new UpdateUserDTO(
+                    "newUsername",
+                    "NewPassword"
+            );
+            var userId = UUID.randomUUID();
+
+            doReturn(Optional.empty())
+                    .when(userRepository)
+                    .findById(uuidArgumentCaptor.capture());
+
+            // Act
+            userService.updateUserById(userId.toString(), updateUserDTO);
+            // Assert
+            assertEquals(userId, uuidArgumentCaptor.getValue());
+
+
+            verify(userRepository, times(1))
+                    .findById(uuidArgumentCaptor.getValue());
+            verify(userRepository, times(0))
+                    .save(any());
         }
     }
 }

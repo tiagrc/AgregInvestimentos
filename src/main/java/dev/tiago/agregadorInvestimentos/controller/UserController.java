@@ -1,6 +1,6 @@
 package dev.tiago.agregadorInvestimentos.controller;
 
-import dev.tiago.agregadorInvestimentos.controller.dto.CreateAccountDto;
+import dev.tiago.agregadorInvestimentos.controller.dto.CreateAccountDTO;
 import dev.tiago.agregadorInvestimentos.controller.dto.CreateUserDTO;
 import dev.tiago.agregadorInvestimentos.controller.dto.UpdateUserDTO;
 import dev.tiago.agregadorInvestimentos.entity.User;
@@ -61,8 +61,8 @@ public class UserController {
 
     @PostMapping("/{userId}/accounts")
     public ResponseEntity<Void> deleteById(@PathVariable ("userId") String userId,
-                                           @RequestBody CreateAccountDto createAccountDto){
-        userService.createAccount(userId, createAccountDto);
+                                           @RequestBody CreateAccountDTO createAccountDTO){
+        userService.createAccount(userId, createAccountDTO);
         return ResponseEntity.ok().build();
     }
 }

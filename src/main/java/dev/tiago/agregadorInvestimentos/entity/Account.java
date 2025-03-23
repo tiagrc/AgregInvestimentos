@@ -1,7 +1,6 @@
 package dev.tiago.agregadorInvestimentos.entity;
 
 import jakarta.persistence.*;
-
 import java.util.List;
 import java.util.UUID;
 

@@ -1,6 +1,6 @@
 package dev.tiago.agregadorInvestimentos.service;
 
-import dev.tiago.agregadorInvestimentos.controller.dto.CreateAccountDto;
+import dev.tiago.agregadorInvestimentos.controller.dto.CreateAccountDTO;
 import dev.tiago.agregadorInvestimentos.controller.dto.CreateUserDTO;
 import dev.tiago.agregadorInvestimentos.controller.dto.UpdateUserDTO;
 import dev.tiago.agregadorInvestimentos.entity.Account;
@@ -12,7 +12,6 @@ import dev.tiago.agregadorInvestimentos.repository.UserRepository;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
-
 import java.time.Instant;
 import java.util.ArrayList;
 import java.util.List;
@@ -86,7 +85,7 @@ public class UserService {
         }
     }
 
-    public void createAccount(String userId, CreateAccountDto createAccountDto) {
+    public void createAccount(String userId, CreateAccountDTO createAccountDto) {
         var user = userRepository.findById(UUID.fromString(userId))
                 .orElseThrow(()-> new ResponseStatusException(HttpStatus.NOT_FOUND));
 

@@ -1,7 +1,7 @@
 package dev.tiago.agregadorInvestimentos.service;
 
-import dev.tiago.agregadorInvestimentos.controller.CreateUserDTO;
-import dev.tiago.agregadorInvestimentos.controller.UpdateUserDTO;
+import dev.tiago.agregadorInvestimentos.controller.dto.CreateUserDTO;
+import dev.tiago.agregadorInvestimentos.controller.dto.UpdateUserDTO;
 import dev.tiago.agregadorInvestimentos.entity.User;
 import dev.tiago.agregadorInvestimentos.repository.UserRepository;
 import org.junit.jupiter.api.DisplayName;
@@ -14,7 +14,6 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
-import javax.security.auth.login.AccountNotFoundException;
 import java.time.Instant;
 import java.util.List;
 import java.util.Optional;
